@@ -12,4 +12,8 @@ val purpleMediumLight = Color(0xFF23243D)
 val purpleMedium = Color(0xFF1B1B2F)
 val purpleDark = Color(0xFF0D0D1D)
 
+val tealLight = Color(0xFF08959A)
+
+val yellowLight = Color(0xFFDCA105)
+
 val onPurple = Color(0xFF7B7CA1)

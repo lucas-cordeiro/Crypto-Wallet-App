@@ -4,6 +4,8 @@ import android.util.TypedValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 
 @Composable
 fun Dp.toPx() : Float{
@@ -13,4 +15,9 @@ fun Dp.toPx() : Float{
         dp,
         AmbientContext.current.resources.displayMetrics,
     )
+}
+
+@Composable
+fun Int.fromPx() : Dp {
+    return (this /  AmbientContext.current.resources.displayMetrics.density).roundToInt().dp
 }
