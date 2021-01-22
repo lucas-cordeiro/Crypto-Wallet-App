@@ -3,7 +3,10 @@ package br.com.lucas.cordeiro.cryptowalletapp
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,9 +16,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.layout.*
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.text.font.FontWeight
@@ -24,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import br.com.lucas.cordeiro.cryptowalletapp.ui.*
 import br.com.lucas.cordeiro.cryptowalletapp.utils.fromPx
+import br.com.lucas.cordeiro.cryptowalletapp.utils.toPx
 import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
@@ -60,8 +69,31 @@ fun Greeting() {
                     .statusBarsPadding()
                     .padding(24.dp)
     ) {
-        Column {
-            CardGradient(Modifier.padding(top = 16.dp)) {
+        Box(Modifier.background(purpleDark).fillMaxSize())
+        Box(Modifier
+                .padding(top = 100.dp)
+                .fillMaxWidth()
+                .preferredHeight(200.dp)
+                .background(Brush.radialGradient(
+                        0.0f to Color.White,
+                        0.7f to Color.Transparent,
+                        center = Offset(Float.POSITIVE_INFINITY, 100.dp.toPx() / 2),
+                        radius = 200.dp.toPx(),
+                )))
+
+        Box(Modifier
+                .padding(top = 400.dp)
+                .fillMaxWidth()
+                .preferredHeight(200.dp)
+                .background(Brush.radialGradient(
+                        0.0f to Color.White,
+                        0.7f to Color.Transparent,
+                        center = Offset(0f, 100.dp.toPx() / 2),
+                        radius = 200.dp.toPx(),
+                )))
+        ScrollableColumn() {
+
+            CardGradient(purpleMedium) {
                 Column(
                         Modifier
                                 .align(Alignment.TopStart)
@@ -84,62 +116,34 @@ fun Greeting() {
                 }
             }
 
+            val colors = listOf(
+                    red600,
+                    pink400,
+                    purple200,
+                    deepPurple400,
+                    indigo400,
+                    blue400,
+                    lightBlue400,
+                    cyan400,
+                    teal400,
+                    green400,
+                    lightGreen400,
+                    lime400,
+                    yellow400,
+                    amber400,
+                    orange400,
+                    deepOrange400
+            )
 
-            CardGradient(
-                    accentColor = yellowLight,
-                    accentPosition = Offset(0f, Float.POSITIVE_INFINITY),
-                    modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                        Modifier
-                                .align(Alignment.TopStart)
-                                .padding(start = 20.dp, top = 24.dp, bottom = 48.dp)
-                ) {
+            colors.forEachIndexed { index, color ->
+                CardGradient(color) {
                     Text(
-                            text = "R$ 38.042,93",
+                            text = "R$ $index,93",
                             style = MaterialTheme.typography.h5.copy(
                                     color = MaterialTheme.colors.onBackground,
                                     fontWeight = FontWeight.Bold
                             ),
-                    )
-                }
-            }
-
-
-            CardGradient(
-                    modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                        Modifier
-                                .align(Alignment.TopStart)
-                                .padding(start = 20.dp, top = 24.dp, bottom = 48.dp)
-                ) {
-                    Text(
-                            text = "R$ 38.042,93",
-                            style = MaterialTheme.typography.h5.copy(
-                                    color = MaterialTheme.colors.onBackground,
-                                    fontWeight = FontWeight.Bold
-                            ),
-                    )
-                }
-            }
-
-
-            CardGradient(
-                    accentColor = tealLight,
-                    modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                        Modifier
-                                .align(Alignment.TopStart)
-                                .padding(start = 20.dp, top = 24.dp, bottom = 48.dp)
-                ) {
-                    Text(
-                            text = "R$ 38.042,93",
-                            style = MaterialTheme.typography.h5.copy(
-                                    color = MaterialTheme.colors.onBackground,
-                                    fontWeight = FontWeight.Bold
-                            ),
+                            modifier = Modifier.padding(bottom = 32.dp)
                     )
                 }
             }
@@ -149,13 +153,8 @@ fun Greeting() {
 
 @Composable
 private fun CardGradient(
+    accentColor: Color,
     modifier: Modifier = Modifier,
-    topLight: Boolean = true,
-    topColor: Color = purpleMediumLight,
-    topPosition: Offset = Offset(Float.POSITIVE_INFINITY, 0f),
-    accentLight: Boolean = true,
-    accentColor: Color = purpleMediumLight,
-    accentPosition: Offset = Offset(Float.POSITIVE_INFINITY, Float.POSITIVE_INFINITY),
     content: @Composable BoxScope.() -> Unit,
 ){
     val margin = remember { 8.dp }
@@ -163,19 +162,43 @@ private fun CardGradient(
     val (width, updateWidth) = remember { mutableStateOf(10) }
     val (height, updateHeight) = remember { mutableStateOf(10) }
 
+    val backgroundColor = purpleDark
+
     Box(modifier) {
+        Canvas(Modifier
+                .preferredWidth(width
+                        .fromPx()
+                        .plus(margin * 2))
+                .preferredHeight(height
+                        .fromPx()
+                        .plus(margin * 2))
+        ){
+
+            drawRect(
+                    brush = Brush.horizontalGradient(
+                            0.0f to accentColor.copy(alpha = 1f),
+                            0.2f to backgroundColor,
+                            0.8f to backgroundColor,
+                            1f to accentColor.copy(alpha = 1f)
+                    ),
+                    blendMode = BlendMode.Darken
+            )
+            drawRoundRect(
+                    color = backgroundColor,
+                    cornerRadius = CornerRadius(30f, 30f),
+                    style = Stroke(width = margin.toPx()),
+            )
+            drawRect(
+                    color = backgroundColor,
+                    style = Stroke(width = margin.toPx() / 2f),
+            )
+        }
+
         Box(Modifier
-                .padding(margin)
-                .clip(RoundedCornerShape(16.dp))
-                .background(
-                        Brush.radialGradient(
-                                0.0f to if (topLight) topColor.copy(alpha = 0.7f) else purpleMedium,
-                                0.7f to purpleMedium.copy(alpha = 1f),
-                                center = topPosition,
-                                radius = height.toFloat(),
-                        )
-                )
+                .padding(horizontal = margin)
                 .fillMaxWidth()
+                .clip(MaterialTheme.shapes.medium)
+                .background(backgroundColor)
                 .onGloballyPositioned { layoutCoordinates ->
                     if (width != layoutCoordinates.size.width)
                         updateWidth(layoutCoordinates.size.width)
@@ -187,19 +210,7 @@ private fun CardGradient(
         ) {
             content()
         }
-        Box(Modifier
-                .clip(RoundedCornerShape(16.dp))
-                .background(
-                        Brush.radialGradient(
-                                0.0f to if (accentLight) accentColor.copy(alpha = 0.4f) else purpleMedium,
-                                1f to purpleMedium.copy(alpha = 0f),
-                                center = accentPosition,
-                                radius = height.toFloat(),
-                        )
-                )
-                .preferredWidth(width.fromPx().plus(margin*2))
-                .preferredHeight(height.fromPx().plus(margin*2))
-        )
+
     }
 }
 
