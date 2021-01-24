@@ -1,10 +1,42 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        compose_version = '1.0.0-alpha10'
-        compose_navigation_version = '1.0.0-alpha05'
-        accompanist_coil_version = '0.4.2'
-        kotlin_version = "1.4.21"
+        //Android
+        minSdkVersion = 21
+        targetSdkVersion = 30
+        compileSdkVersion = 30
+        androidxCoreVersion = '1.5.0-beta01'
+        appCompatVersion = '1.3.0-beta01'
+        materialVersion = '1.2.1'
+        appStartupVersion = '1.0.0'
+
+        //KOTLIN
+        kotlinVersion = '1.4.21'
+
+        //Debug
+        isDebuggable = false
+
+        //Lifecycle
+        lifecycleVersion = '2.3.0-alpha07'
+
+        //Compose
+        composeVersion = '1.0.0-alpha10'
+        composeNavigationVersion = '1.0.0-alpha05'
+        accompanistCoilVersion = '0.4.2'
+
+        //Koin
+        koinVersion = '2.2.1'
+
+        //Coroutine
+        kotlinCoroutineVersion = '1.4.2'
+
+        //Data
+        ktorVersion = '1.4.2'
+        roomVersion = '2.2.6'
+        timberVersion = '4.7.1'
+        okhttpVersion = '4.9.0'
+        datastoreVersion = '1.0.0-alpha02'
+        protoBufVersion = '3.10.0'
     }
     repositories {
         google()
@@ -12,7 +44,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0-alpha04'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

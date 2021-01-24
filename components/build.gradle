@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
 }
 
@@ -7,7 +7,6 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "br.com.lucas.cordeiro.cryptowalletapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -37,23 +36,9 @@ android {
         kotlinCompilerExtensionVersion composeVersion
         kotlinCompilerVersion kotlinVersion
     }
-    packagingOptions {
-        exclude 'META-INF/ktor-client-json.kotlin_module'
-        exclude 'META-INF/ktor-client-core.kotlin_module'
-        exclude 'META-INF/ktor-io.kotlin_module'
-        exclude 'META-INF/ktor-http.kotlin_module'
-        exclude 'META-INF/ktor-http-cio.kotlin_module'
-        exclude 'META-INF/ktor-utils.kotlin_module'
-        exclude 'META-INF/DEPENDENCIES'
-    }
 }
 
 dependencies {
-    //Modules
-    implementation project(':domain')
-    implementation project(':data')
-    implementation project(':components')
-
     //Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
@@ -61,13 +46,14 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
 
+    //Modules
+    implementation project(':domain')
 
     //Android
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.core:core-ktx:$androidxCoreVersion"
     implementation "androidx.appcompat:appcompat:$appCompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
-    implementation "androidx.startup:startup-runtime:$appStartupVersion"
 
 
     //Compose
@@ -78,14 +64,20 @@ dependencies {
     implementation "androidx.compose.material:material-icons-core:$composeVersion"
     implementation "androidx.compose.material:material-icons-extended:$composeVersion"
 
+    //ComposeUtils
+    api "dev.chrisbanes.accompanist:accompanist-coil:$accompanistCoilVersion"
+    api "dev.chrisbanes.accompanist:accompanist-insets:$accompanistCoilVersion"
+
+    //Timber
+    api "com.jakewharton.timber:timber:$timberVersion"
+
     //Injection
     implementation "org.koin:koin-core:$koinVersion"
-    implementation ("org.koin:koin-android-scope:$koinVersion")
-    implementation ("org.koin:koin-android-viewmodel:$koinVersion")
+    implementation ("org.koin:koin-android-scope:$koinVersion") {
+        exclude group: 'com.android.support'
+    }
+    implementation ("org.koin:koin-android-viewmodel:$koinVersion"){
+        exclude group: 'com.android.support'
+    }
     implementation "org.koin:koin-androidx-compose:$koinVersion"
-
-    //Test
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }

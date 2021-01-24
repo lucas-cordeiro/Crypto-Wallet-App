@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="br.com.lucas.cordeiro.cryptowalletapp">
 
     <application
@@ -11,7 +12,7 @@
         android:hardwareAccelerated="true"
         android:theme="@style/Theme.CryptoWalletApp">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.CryptoWalletApp.NoActionBar">
             <intent-filter>
@@ -20,6 +21,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="br.com.lucas.cordeiro.cryptowalletapp.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+
+            <meta-data
+                android:name="br.com.lucas.cordeiro.cryptowalletapp.appstartup.KoinInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="br.com.lucas.cordeiro.cryptowalletapp.appstartup.TimberInitializer"
+                android:value="androidx.startup" />
+        </provider>
     </application>
 
 </manifest>

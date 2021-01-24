@@ -23,11 +23,3 @@ fun Dp.toPx() : Float{
 fun Int.fromPx() : Dp {
     return (this /  AmbientContext.current.resources.displayMetrics.density).roundToInt().dp
 }
-
-fun Double?.currency(): String {
-    val ptBR = Locale("pt", "BR")
-    val formatter = NumberFormat.getCurrencyInstance(ptBR)
-    return formatter.format(this ?: 0.0)
-}
-
-fun Double.format(digits: Int) = "%.${digits}f".format(this)

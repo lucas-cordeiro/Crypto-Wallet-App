@@ -1,0 +1,107 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id "com.google.protobuf" version "0.8.12"
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "0.0.1"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion composeVersion
+        kotlinCompilerVersion kotlinVersion
+    }
+}
+
+dependencies {
+
+    implementation project(':domain')
+    implementation project(':components')
+
+    //Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+    //Android
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.core:core-ktx:$androidxCoreVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+
+    //Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
+
+    //API
+    implementation "io.ktor:ktor-client-okhttp:$ktorVersion"
+    implementation("io.ktor:ktor-client-apache:$ktorVersion")
+    implementation "io.ktor:ktor-client-json:$ktorVersion"
+    implementation "io.ktor:ktor-client-auth-jvm:$ktorVersion"
+    implementation "io.ktor:ktor-client-auth-basic:$ktorVersion"
+    implementation "io.ktor:ktor-client-gson:$ktorVersion"
+    implementation "io.ktor:ktor-client-logging-jvm:$ktorVersion"
+
+    //Room
+    kapt "androidx.room:room-runtime:$roomVersion"
+    kapt"androidx.room:room-compiler:$roomVersion"
+    api "androidx.room:room-ktx:$roomVersion"
+
+    //Timber
+    api "com.jakewharton.timber:timber:$timberVersion"
+
+    //DataStore
+    implementation  "androidx.datastore:datastore-preferences:$datastoreVersion"
+    implementation "androidx.datastore:datastore-core:$datastoreVersion"
+    // Protobuf
+    implementation  "com.google.protobuf:protobuf-javalite:$protoBufVersion"
+
+    //Lifecycle
+    api "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    api "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+
+    //Injection
+    implementation "org.koin:koin-core:$koinVersion"
+    implementation ("org.koin:koin-android-scope:$koinVersion") {
+        exclude group: 'com.android.support'
+    }
+    implementation ("org.koin:koin-android-viewmodel:$koinVersion"){
+        exclude group: 'com.android.support'
+    }
+    implementation "org.koin:koin-androidx-compose:$koinVersion"
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}

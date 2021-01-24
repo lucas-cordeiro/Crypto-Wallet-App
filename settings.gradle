@@ -1,2 +1,5 @@
 rootProject.name = "Crypto Wallet App"
 include ':app'
+include ':domain'
+include ':data'
+include ':components'

@@ -1,4 +1,4 @@
-package br.com.lucas.cordeiro.cryptowalletapp.ui
+package br.com.lucas.cordeiro.cryptowalletapp.theme
 
 import androidx.compose.ui.graphics.Color
 
