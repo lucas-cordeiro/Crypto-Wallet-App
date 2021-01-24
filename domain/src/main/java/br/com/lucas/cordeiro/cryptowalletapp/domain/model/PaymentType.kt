@@ -1,5 +1,5 @@
 package br.com.lucas.cordeiro.cryptowalletapp.domain.model
 
 enum class PaymentType {
-    GENERIC, FOOD, EDUCATION, CREDIT
+    GENERIC, PARKING, FOOD, EDUCATION, CREDIT
 }
