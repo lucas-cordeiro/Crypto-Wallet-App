@@ -60,7 +60,6 @@ Project developed for studies Jetpack Compose, S.O.L.I.D, Clean Architecture, Re
 * [MVVM](https://developer.android.com/jetpack/guide)
 * [Coroutines](https://developer.android.com/kotlin/coroutines)
 * [StateFlow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-state-flow/)
-* [Ktor](https://ktor.io/clients/http-client/multiplatform.html)
 
 
 ## Jetpack Compose
